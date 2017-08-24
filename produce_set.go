@@ -137,7 +137,7 @@ func (ps *produceSet) dropPartition(topic string, partition int32) []*ProducerMe
 func (ps *produceSet) wouldOverflow(msg *ProducerMessage) bool {
 	switch {
 	// Would we overflow our maximum possible size-on-the-wire? 10KiB is arbitrary overhead for safety.
-	case ps.bufferBytes+msg.byteSize() >= int(MaxRequestSize-(10*1024)):
+	case ps.bufferBytes+msg.byteSize() >= int(MaxRequestSize-(200*1024)):
 		return true
 	// Would we overflow the size-limit of a compressed message-batch for this partition?
 	case ps.parent.conf.Producer.Compression != CompressionNone &&
